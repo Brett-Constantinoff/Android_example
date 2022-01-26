@@ -39,6 +39,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/ActiveUser"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.084"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_age" />
 
@@ -72,5 +73,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_view_all"
         app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/search_user"
+        android:layout_width="138dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="@string/SearchUser"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/lview_customer_list"
+        app:layout_constraintEnd_toStartOf="@+id/btn_add"
+        app:layout_constraintHorizontal_bias="0.36"
+        app:layout_constraintStart_toEndOf="@+id/btn_view_all"
+        app:layout_constraintTop_toBottomOf="@+id/edit_age"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <Button
+        android:id="@+id/search_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/Search"
+        app:layout_constraintBottom_toTopOf="@+id/btn_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/search_user"
+        app:layout_constraintTop_toBottomOf="@+id/edit_age" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package com.example.android_example;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,12 +16,11 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    Button btn_add, btn_view_all;
-    EditText edit_name, edit_age;
+    Button btn_add, btn_view_all, search_btn;
+    EditText edit_name, edit_age, search_user;
     CheckBox switch_active;
     ListView list_view_user_list;
     ArrayAdapter userArrayAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) { //code runs on app start
@@ -29,10 +29,12 @@ public class MainActivity extends AppCompatActivity {
 
         btn_add = findViewById(R.id.btn_add);
         btn_view_all = findViewById(R.id.btn_view_all);
+        search_btn = findViewById(R.id.search_btn);
         edit_name = findViewById(R.id.edit_name);
         edit_age = findViewById(R.id.edit_age);
         switch_active = findViewById(R.id.is_active);
         list_view_user_list = findViewById(R.id.lview_customer_list);
+        search_user = findViewById(R.id.search_user);
         DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
 
         ShowUsersOnListView(databaseHelper);
@@ -61,7 +63,24 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
                 ShowUsersOnListView(databaseHelper);
+            }
+        });
 
+        search_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String searchedUser = search_user.getText().toString();
+                DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
+                try {
+                    if(databaseHelper.getOne(searchedUser)){
+                        Toast.makeText(MainActivity.this, "User Found", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(MainActivity.this, "No User Found", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(MainActivity.this, "No User Found", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

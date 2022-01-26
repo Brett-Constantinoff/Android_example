@@ -5,4 +5,6 @@
     <string name="ActiveUser">Active user</string>
     <string name="ViewAll">View all</string>
     <string name="Add">Add</string>
+    <string name="SearchUser">Search User</string>
+    <string name="Search">Search</string>
 </resources>
