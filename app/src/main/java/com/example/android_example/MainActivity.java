@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
                 ShowUsersOnListView(databaseHelper);
-                //Toast.makeText(MainActivity.this, all.toString(), Toast.LENGTH_SHORT).show();
+
             }
         });
 

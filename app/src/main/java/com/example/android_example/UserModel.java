@@ -18,12 +18,7 @@ public class UserModel {
 
     @Override
     public String toString() {
-        return "UserModel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", active=" + active +
-                '}';
+        return "User ID: " + this.id + " User name: " + this.name + " User Age: " + this.age;
     }
 
     public int getId() {
