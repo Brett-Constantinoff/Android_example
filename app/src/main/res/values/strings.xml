@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Android_example</string>
+    <string name="UserName">User name</string>
+    <string name="UserAge">User age</string>
+    <string name="ActiveUser">Active user</string>
+    <string name="ViewAll">View all</string>
+    <string name="Add">Add</string>
 </resources>

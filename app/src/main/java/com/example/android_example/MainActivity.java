@@ -14,10 +14,4 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); //relates to the activity_main.xml
     }
-
-    public void onHelloBtnClicked(View view){
-        TextView welcome_txt = findViewById(R.id.txtWelcome);
-        welcome_txt.setText("Hello again");
-    }
-
 }
