@@ -4,13 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     EditText edit_name, edit_age;
     CheckBox switch_active;
     ListView list_view_user_list;
+    ArrayAdapter userArrayAdapter;
 
 
     @Override
@@ -31,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
         edit_age = findViewById(R.id.edit_age);
         switch_active = findViewById(R.id.is_active);
         list_view_user_list = findViewById(R.id.lview_customer_list);
+        DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
+
+        ShowUsersOnListView(databaseHelper);
 
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,17 +51,23 @@ public class MainActivity extends AppCompatActivity {
                 DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
                 boolean success = databaseHelper.addOne(new_user);
                 Toast.makeText(MainActivity.this, "Success = " + success, Toast.LENGTH_SHORT).show();
+                ShowUsersOnListView(databaseHelper);
             }
-
-
         });
 
         btn_view_all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "View Button", Toast.LENGTH_SHORT).show();
+                DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
+                ShowUsersOnListView(databaseHelper);
+                //Toast.makeText(MainActivity.this, all.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
+    }
+
+    private void ShowUsersOnListView(DatabaseHelper databaseHelper) {
+        userArrayAdapter = new ArrayAdapter<UserModel>(MainActivity.this, android.R.layout.simple_list_item_1, databaseHelper.getUsers());
+        list_view_user_list.setAdapter(userArrayAdapter);
     }
 }

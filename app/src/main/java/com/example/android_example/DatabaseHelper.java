@@ -2,10 +2,14 @@ package com.example.android_example;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -23,7 +27,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String create_table_statement = "CREATE TABLE " + USER_TABLE + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_USER_NAME + " TEXT, " + COLUMN_USER_AGE + " INT, " + COLUMN_ACTIVE_USER + " BOOL)";
-
         sqLiteDatabase.execSQL(create_table_statement);
     }
 
@@ -42,5 +45,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_ACTIVE_USER, user.is_active());
 
         return sqLiteDatabase.insert(USER_TABLE, null, cv) != -1;
+    }
+
+    public List<UserModel> getUsers(){
+        List<UserModel> returnList = new ArrayList<>();
+        String queryString = "SELECT * FROM " + USER_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if(cursor.moveToFirst()){
+            do{
+                int userID = cursor.getInt(0);
+                String userName = cursor.getString(1);
+                int userAge = cursor.getInt(2);
+                boolean userActive = cursor.getInt(3) == 1;
+                UserModel newUser = new UserModel(userID, userName, userAge, userActive);
+                returnList.add(newUser);
+            }while(cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();;
+        return returnList;
     }
 }
