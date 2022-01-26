@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -61,6 +62,16 @@ public class MainActivity extends AppCompatActivity {
                 DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
                 ShowUsersOnListView(databaseHelper);
                 //Toast.makeText(MainActivity.this, all.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        list_view_user_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                UserModel userClicked = (UserModel) adapterView.getItemAtPosition(i);
+                databaseHelper.deleteOne(userClicked);
+                ShowUsersOnListView(databaseHelper);
+                Toast.makeText(MainActivity.this, "Deleted " + userClicked.getName(), Toast.LENGTH_SHORT).show();
             }
         });
 

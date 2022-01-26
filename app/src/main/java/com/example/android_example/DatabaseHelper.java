@@ -47,6 +47,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sqLiteDatabase.insert(USER_TABLE, null, cv) != -1;
     }
 
+    public boolean deleteOne(UserModel user){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + USER_TABLE + " WHERE " + COLUMN_ID + " = " + user.getId();
+        Cursor cursor = db.rawQuery(queryString, null);
+        return cursor.moveToFirst();
+    }
+
     public List<UserModel> getUsers(){
         List<UserModel> returnList = new ArrayList<>();
         String queryString = "SELECT * FROM " + USER_TABLE;
