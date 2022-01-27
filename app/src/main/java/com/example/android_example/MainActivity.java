@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         search_user = findViewById(R.id.search_user);
         DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
 
-        ShowUsersOnListView(databaseHelper);
+        ShowUsersOnListView(databaseHelper, databaseHelper.getUsers());
 
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
                 boolean success = databaseHelper.addOne(new_user);
                 Toast.makeText(MainActivity.this, "Success = " + success, Toast.LENGTH_SHORT).show();
-                ShowUsersOnListView(databaseHelper);
+                ShowUsersOnListView(databaseHelper, databaseHelper.getUsers());
             }
         });
 
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
-                ShowUsersOnListView(databaseHelper);
+                ShowUsersOnListView(databaseHelper, databaseHelper.getUsers());
             }
         });
 
@@ -72,12 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 String searchedUser = search_user.getText().toString();
                 DatabaseHelper databaseHelper = new DatabaseHelper(MainActivity.this);
                 try {
-                    if(databaseHelper.getOne(searchedUser)){
-                        Toast.makeText(MainActivity.this, "User Found", Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        Toast.makeText(MainActivity.this, "No User Found", Toast.LENGTH_SHORT).show();
-                    }
+                    ShowUsersOnListView(databaseHelper, databaseHelper.getOne(searchedUser));
+                    Toast.makeText(MainActivity.this, "User Found", Toast.LENGTH_SHORT).show();
                 }catch (Exception e){
                     Toast.makeText(MainActivity.this, "No User Found", Toast.LENGTH_SHORT).show();
                 }
@@ -89,15 +85,15 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 UserModel userClicked = (UserModel) adapterView.getItemAtPosition(i);
                 databaseHelper.deleteOne(userClicked);
-                ShowUsersOnListView(databaseHelper);
+                ShowUsersOnListView(databaseHelper, databaseHelper.getUsers());
                 Toast.makeText(MainActivity.this, "Deleted " + userClicked.getName(), Toast.LENGTH_SHORT).show();
             }
         });
 
     }
 
-    private void ShowUsersOnListView(DatabaseHelper databaseHelper) {
-        userArrayAdapter = new ArrayAdapter<UserModel>(MainActivity.this, android.R.layout.simple_list_item_1, databaseHelper.getUsers());
+    private void ShowUsersOnListView(DatabaseHelper databaseHelper, List<UserModel> users) {
+        userArrayAdapter = new ArrayAdapter<UserModel>(MainActivity.this, android.R.layout.simple_list_item_1, users);
         list_view_user_list.setAdapter(userArrayAdapter);
     }
 }

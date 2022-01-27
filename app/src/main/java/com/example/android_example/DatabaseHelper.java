@@ -55,11 +55,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor.moveToFirst();
     }
 
-    public boolean getOne(String userName){
+    public List<UserModel> getOne(String userName){
+        List<UserModel> returnList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         String queryString = "SELECT * FROM " + USER_TABLE + " WHERE " + COLUMN_USER_NAME + " = " + " '" + userName + "'";
         Cursor cursor = db.rawQuery(queryString, null);
-        return cursor.moveToFirst();
+        cursor.moveToFirst();
+        int userID = cursor.getInt(0);
+        String name = cursor.getString(1);
+        int userAge = cursor.getInt(2);
+        boolean userActive = cursor.getInt(3) == 1;
+        UserModel user = new UserModel(userID, name, userAge, userActive);
+        returnList.add(user);
+        return returnList;
     }
 
     public List<UserModel> getUsers(){
